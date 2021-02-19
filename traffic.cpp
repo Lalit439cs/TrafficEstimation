@@ -11,37 +11,36 @@
 using namespace cv;
 using namespace std;
 
-Point2f src[4];
+vector<Point2f> src,dst;
 int i=0;
+Mat topvemp, topvfull, emptypic, traffic;
+float w = 300, h = 600;//cropped image size
+string trafficpicloc = "res/traffic.jpg";//put image here
+string emptypicloc = "res/empty.jpg";//put image here
+bool imageshown=false;
 
 void mousePoints(int event, int x, int y, int flags, void* params) {
 	Mat* image = reinterpret_cast<Mat*>(params);
 	if (event == EVENT_LBUTTONDOWN) {
-		cout << x << " " << y << " ";
-		//addelem(x, y, i);
+		src.push_back(Point2f(x, y));
+	}
+	if ((src.size() == 4)&&(!imageshown)) {
+		//Point2f src[4] = { {949,275},{1282,264},{510,1044},{1505,1045} };
+		dst = { {0.0f,0.0f},{w,0.0f},{0.0f,h},{w,h} };
+		Mat wpmat = findHomography(src, dst);
+		warpPerspective(emptypic, topvemp, wpmat, Point(w, h));
+		warpPerspective(traffic, topvfull, wpmat, Point(w, h));
+		imshow("Empty", topvemp);
+		imshow("Traffic", topvfull);
+		imageshown = true;
 	}
 }
-void addelem(int x, int y,int index) {
-	src[index].x = x;
-	src[index].y = y;
-	i++;
-}
-int main() {
-	string trafficpicloc = "res/traffic.jpg";//put image here
-	string emptypicloc = "res/empty.jpg";//put image here
-	Mat traffic = imread(trafficpicloc);
-	Mat empty = imread(emptypicloc);
-	imshow("Original Image", empty);
-	//setMouseCallback("Original Image", mousePoints, reinterpret_cast<void*>(&empty));
-	Mat topvemp, topvfull;
 
-	float w = 300, h = 600;
-	Point2f src[4] = { {949,275},{1282,264},{510,1044},{1505,1045} };
-	Point2f dst[4] = { {0.0f,0.0f},{w,0.0f},{0.0f,h},{w,h} };
-	Mat wpmat = getPerspectiveTransform(src, dst);
-	warpPerspective(empty, topvemp, wpmat, Point(w, h));
-	warpPerspective(traffic, topvfull, wpmat, Point(w, h));
-	imshow("Image", topvemp);
+int main() {
+	traffic = imread(trafficpicloc);
+	emptypic = imread(emptypicloc);
+	imshow("Original Image", emptypic);
+	setMouseCallback("Original Image", mousePoints, reinterpret_cast<void*>(&emptypic));
 	//imshow("Image", topvfull);
 	waitKey(0);
 	return 0;
