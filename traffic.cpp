@@ -11,19 +11,20 @@
 using namespace cv;
 using namespace std;
 
+Point2f src[4];
+int i=0;
 
-Point2f src[4] = { {0.0f,0.0f},{0.0f,0.0f},{0.0f,0.0f},{0.0f,0.0f} };
-int index=0;
-float w = 300, h = 600;
-
-void mousePoints(int event, int x, int y, int flags, void* params) {//not working. need to update global src
+void mousePoints(int event, int x, int y, int flags, void* params) {
 	Mat* image = reinterpret_cast<Mat*>(params);
 	if (event == EVENT_LBUTTONDOWN) {
-		if (index < 4) {
-			src[index] = { x,y };
-			index++;
-		}
+		cout << x << " " << y << " ";
+		//addelem(x, y, i);
 	}
+}
+void addelem(int x, int y,int index) {
+	src[index].x = x;
+	src[index].y = y;
+	i++;
 }
 int main() {
 	string trafficpicloc = "res/traffic.jpg";//put image here
@@ -31,19 +32,17 @@ int main() {
 	Mat traffic = imread(trafficpicloc);
 	Mat empty = imread(emptypicloc);
 	imshow("Original Image", empty);
-	setMouseCallback("Image", mousePoints, reinterpret_cast<void*>(&empty));
+	//setMouseCallback("Original Image", mousePoints, reinterpret_cast<void*>(&empty));
+	Mat topvemp, topvfull;
 
-	if (index > 3) {
-		while (true) {
-			Mat topvemp, topvfull;
-			Point2f dst[4] = { {0.0f,0.0f},{w,0.0f},{0.0f,h},{w,h} };
-			Mat wpmat = getPerspectiveTransform(src, dst);
-			warpPerspective(empty, topvemp, wpmat, Point(w, h));
-			warpPerspective(traffic, topvfull, wpmat, Point(w, h));
-			imshow("Image", topvemp);
-			//imshow("Image", topvfull);
-			waitKey(0);
-		}
-	}
+	float w = 300, h = 600;
+	Point2f src[4] = { {949,275},{1282,264},{510,1044},{1505,1045} };
+	Point2f dst[4] = { {0.0f,0.0f},{w,0.0f},{0.0f,h},{w,h} };
+	Mat wpmat = getPerspectiveTransform(src, dst);
+	warpPerspective(empty, topvemp, wpmat, Point(w, h));
+	warpPerspective(traffic, topvfull, wpmat, Point(w, h));
+	imshow("Image", topvemp);
+	//imshow("Image", topvfull);
+	waitKey(0);
 	return 0;
 }
