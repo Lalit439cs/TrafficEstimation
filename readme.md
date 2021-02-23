@@ -1,4 +1,4 @@
-Run the application
+Run the application using make all and make run.
 
 It will ask for the directory where both images are present. Enter it and both will be loaded.
 Give Directory name only. Example:"C:\Users\User\Desktop\TrafficCV".
