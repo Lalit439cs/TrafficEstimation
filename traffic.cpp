@@ -47,6 +47,8 @@ int main() {
 		cout << "Images not Found";
 		return 0;
 	}
+	cvtColor(emptypic, emptypic, COLOR_BGR2GRAY);
+	cvtColor(traffic, traffic, COLOR_BGR2GRAY);
 	imshow("Original Empty Image", emptypic);
 	imshow("Original Traffic Image", traffic);
 	setMouseCallback("Original Empty Image", mousePointsO, reinterpret_cast<void*>(&emptypic));
