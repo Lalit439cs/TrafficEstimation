@@ -9,7 +9,7 @@ using namespace std;
 
 vector<Point2f> src,dst;
 Mat topvemp, topvfull, emptypic, traffic,cropemptypic, croptrafficpic;
-string path;
+string path_traffic,path_empty;
 
 void mousePointsO(int event, int x, int y, int flags, void* params) {
 	Mat* image = reinterpret_cast<Mat*>(params);
@@ -28,10 +28,10 @@ void mousePointsO(int event, int x, int y, int flags, void* params) {
 		imshow("Cropped Empty Image", cropemptypic);
 		imshow("Top Traffic Image", topvfull);
 		imshow("Cropped Traffic Image", croptrafficpic);
-		imwrite(path + "/croppedempty.jpg", cropemptypic);
-		imwrite(path + "/croppedtraffic.jpg", croptrafficpic);
-		imwrite(path + "/topempty.jpg", topvemp);
-		imwrite(path + "/toptraffic.jpg", topvfull);
+		imwrite("croppedempty.jpg", cropemptypic);
+		imwrite("croppedtraffic.jpg", croptrafficpic);
+		imwrite("topempty.jpg", topvemp);
+		imwrite("toptraffic.jpg", topvfull);
 		src.clear();
 	}
 }
