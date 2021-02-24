@@ -37,10 +37,12 @@ void mousePointsO(int event, int x, int y, int flags, void* params) {
 }
 
 int main() {
-	cout << "Enter directory path:\n";
-	cin >> path;
-	string trafficpicloc = path+"/traffic.jpg";//put image here
-	string emptypicloc = path + "/empty.jpg";//put image here
+	cout << "Enter traffic image path:\n";
+	cin >> path_traffic;
+	string trafficpicloc = path_traffic;//put traffic image here
+	cout << "Enter empty image path:\n";
+	cin >> path_empty;
+	string emptypicloc = path_empty;//put empty image here
 	traffic = imread(trafficpicloc);
 	emptypic = imread(emptypicloc);
 	if ((!traffic.data)||(!emptypic.data)) {
