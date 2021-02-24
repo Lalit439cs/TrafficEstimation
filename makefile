@@ -3,4 +3,4 @@ all:
 run:
 	./traffic.o
 clean:
-	rm *.o
+	rm *.o *.jpg
