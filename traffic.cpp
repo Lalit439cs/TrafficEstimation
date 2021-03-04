@@ -3,19 +3,19 @@
 
 #include <opencv2/opencv.hpp>
 #include <iostream>
+#include <fstream>
 
 using namespace cv;
 using namespace std;
 
 vector<Point2f> src,dst;
-Mat topvemp, topvfull, emptypic, traffic,wpmat, cropemptypic, croptrafficpic;
+Mat topvemp, emptypic ,wpmat, cropemptypic;
 Mat vidframe, flow, prevframe;
-string empname,trafficname,videoloc;
+string empname,videoloc;
 
 void playvideo() {
 	VideoCapture cap(videoloc);
-	while (true) {
-		cap.read(vidframe);
+	while (cap.read(vidframe)==true) {
 		cvtColor(vidframe, vidframe, COLOR_BGR2GRAY);
 		absdiff(vidframe, emptypic, vidframe);
 		threshold(vidframe, vidframe, 50.0, 100.0, THRESH_BINARY);
@@ -42,9 +42,9 @@ void playvideo() {
 				}
 			}
 		}
-		cout << framenum<<" "<< movingcount <<" "<< staticcount << "\n";
+		cout << framenum<<","<< movingcount <<","<< staticcount << "\n";
 		imshow("Video", vidframe);
-		waitKey(50);
+		waitKey(30);
 		prevframe = vidframe;
 	}
 }
@@ -57,34 +57,26 @@ void mousePointsO(int event, int x, int y, int flags, void* params) {
 		dst = { {472.0f,52.0f},{472.0f,830.0f},{800.0f,830.0f},{800.0f,52.0f} };//values used by instructor
 		wpmat = findHomography(src, dst);
 		warpPerspective(emptypic, topvemp, wpmat, emptypic.size());
-		warpPerspective(traffic, topvfull, wpmat, traffic.size());
 		cropemptypic = topvemp(Rect(10, 20, 100, 50));
-		croptrafficpic = topvfull(Rect(472, 52, 800 - 472, 830 - 52));
 		cropemptypic = topvemp(Rect(472,52,800-472,830-52));
 		src.clear();
 		playvideo();
+		destroyAllWindows();
 	}
 }
 int main() {
-	/*cout << "Enter empty image directory and name:\n";
+
+	cout << "Enter traffic image and video directory and name in separate lines:\n";
 	cin >> empname;
-	cout << "Enter traffic image directory and name:\n";
-	cin >> trafficname;*/
-	empname = "C:/Users/User/Desktop/TrafficCV/empty.jpg";//removelater
-	trafficname = "C:/Users/User/Desktop/TrafficCV/empty.jpg";//removelater
-	videoloc = "C:/Users/User/Desktop/TrafficCV/trafficvideo.mp4";//removelater
-	string trafficpicloc =trafficname;//put image here
+	cin >> videoloc;
 	string emptypicloc =empname;//put image here
-	traffic = imread(trafficpicloc);
 	emptypic = imread(emptypicloc);
 	cvtColor(emptypic, emptypic, COLOR_BGR2GRAY);
-	cvtColor(traffic, traffic, COLOR_BGR2GRAY);
-	if ((!traffic.data)||(!emptypic.data)) {
-		cout << "Images not Found";
+	if (!emptypic.data) {
+		cout << "Image not Found";
 		return 0;
 	}
 	imshow("Original Empty Image", emptypic);
-	//imshow("Original Traffic Image", traffic);
 	setMouseCallback("Original Empty Image", mousePointsO, reinterpret_cast<void*>(&emptypic));
 	waitKey(0);
 	return 0;
