@@ -9,7 +9,7 @@ using namespace cv;
 using namespace std;
 
 vector<Point2f> src,dst;
-Mat topvemp, emptypic ,wpmat, cropemptypic;
+Mat emptypic ,wpmat;
 Mat vidframe, flow, prevframe;
 string empname,videoloc;
 
@@ -42,7 +42,7 @@ void playvideo() {
 				}
 			}
 		}
-		cout << framenum<<","<< movingcount <<","<< staticcount << "\n";
+		cout << framenum<<" "<< movingcount <<" "<< staticcount << "\n";
 		imshow("Video", vidframe);
 		waitKey(30);
 		prevframe = vidframe;
@@ -56,9 +56,6 @@ void mousePointsO(int event, int x, int y, int flags, void* params) {
 	if (src.size() == 4) {
 		dst = { {472.0f,52.0f},{472.0f,830.0f},{800.0f,830.0f},{800.0f,52.0f} };//values used by instructor
 		wpmat = findHomography(src, dst);
-		warpPerspective(emptypic, topvemp, wpmat, emptypic.size());
-		cropemptypic = topvemp(Rect(10, 20, 100, 50));
-		cropemptypic = topvemp(Rect(472,52,800-472,830-52));
 		src.clear();
 		playvideo();
 		destroyAllWindows();
