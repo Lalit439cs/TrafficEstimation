@@ -15,6 +15,8 @@ string empname,videoloc;
 
 void playvideo() {
 	VideoCapture cap(videoloc);
+	//ofstream out("C:/Users/User/Desktop/TrafficCV/out.txt");
+	//out << "Frame Number" << "," << "Moving Density" << "," << "Queue Density" << "\n";
 	while (cap.read(vidframe)==true) {
 		cvtColor(vidframe, vidframe, COLOR_BGR2GRAY);
 		absdiff(vidframe, emptypic, vidframe);
@@ -22,7 +24,7 @@ void playvideo() {
 		warpPerspective(vidframe, vidframe, wpmat, vidframe.size());
 		vidframe = vidframe(Rect(472, 52, 800 - 472, 830 - 52));
 		int movingcount = 0;
-		int staticcount = 0;
+		int queuecount = 0;
 		int framenum=cap.get(CAP_PROP_POS_FRAMES);
 		if (prevframe.empty() == false) {
 			calcOpticalFlowFarneback(prevframe, vidframe, flow, 0.4, 1, 12, 2, 8, 1.2, 0);
@@ -35,18 +37,18 @@ void playvideo() {
 						if (pixelval > 1.0) {
 							movingcount++;
 						}
-						else {
-							staticcount++;
-						}
+						queuecount++;
 					}
 				}
 			}
 		}
-		cout << framenum<<" "<< movingcount <<" "<< staticcount << "\n";
+		cout << framenum<<","<< movingcount <<","<< queuecount << "\n";
+		//out << framenum << "," << movingcount << "," << queuecount << "\n";
 		imshow("Video", vidframe);
 		waitKey(30);
 		prevframe = vidframe;
 	}
+	//out.close();
 }
 void mousePointsO(int event, int x, int y, int flags, void* params) {
 	Mat* image = reinterpret_cast<Mat*>(params);
