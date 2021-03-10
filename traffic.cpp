@@ -65,7 +65,7 @@ void mousePointsO(int event, int x, int y, int flags, void* params) {
 }
 int main() {
 
-	cout << "Enter traffic image and video directory and name in separate lines:\n";
+	cout << "Enter empty image and video directory path name in separate lines:\n";
 	cin >> empname;
 	cin >> videoloc;
 	string emptypicloc =empname;//put image here
