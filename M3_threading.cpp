@@ -14,7 +14,7 @@ using namespace std;
 
 vector<Point2f> src,dst;
 Mat emptypic ,wpmat;
-Mat vidframe, flow, prevframe;
+Mat vidframe, prevframe;
 string empname,videoloc;
 string emptypicloc;
 int globalcount=0;
@@ -26,6 +26,7 @@ void* subplayvideo( void* arg){
 	int ith=globalcount++;
 	int last= (ith+1) * gap;
 	int start= ith * gap;
+	Mat flow;
 	if (ith==numthreads-1){last=vidframe.cols;}
 	Mat curframe=vidframe(Range::all(), Range(start,last));
 	int movingcountt = 0;
