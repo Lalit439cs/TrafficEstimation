@@ -1,3 +1,13 @@
+# Traffic Density Estimator
+• Developed Traffic Density Estimator for Queue & dynamic traffic from traffic video using OpenCV function in C++ <br>
+
+• For this software design ,analysed utility-runtime trade-of using the parameters-sub-sampling frames,splitwork 
+across threads,reduce resolution for each frame etc.
+
+## Compiling Instructions
+<!-- **Compiling Instructions** <br> -->
+Follow below steps to run the code-<br>
+
 Run the application using make all and make run.
 
 Enter empty image and video path names in separate lines including their directory and extension. Example: "C:\Users\User\Desktop\empty.jpg" and "C:\Users\User\Desktop\trafficvideo.mp4" What not to give: "empty trafficvideo"
@@ -12,5 +22,6 @@ The code used to plot the graph is also submitted as plot.py.
 The lines needed to get the file has been commented. Uncomment them to get make the out.txt yourself.
 Running the code will only output the required lines in the console as stdout.
 
-**DECLARATION** <br>
-This project was created collaboratively by Arka Mandal and Lalit Meena during COP290, Software Design Practices course.
+## DECLARATION
+<!-- **DECLARATION** <br> -->
+This project was created collaboratively by Arka Mandal and Lalit Meena during COP290, Software Design Practices course(Spring 2021,Prof.Rijurekha Sen).
