@@ -11,3 +11,6 @@ The code used to plot the graph is also submitted as plot.py.
 
 The lines needed to get the file has been commented. Uncomment them to get make the out.txt yourself.
 Running the code will only output the required lines in the console as stdout.
+
+**DECLARATION**
+This project was created collaboratively by Arka Mandal and Lalit Meena during COP290, Software Design Practices course.
